@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - BuyNest</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+        .home-container {
+            background: white;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            animation: fadeInUp 0.8s ease-out;
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .welcome-icon {
+            font-size: 4rem;
+            color: #ff0000;
+            margin-bottom: 1rem;
+        }
+        .welcome-text h1 {
+            color: #333;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .welcome-text p {
+            color: #666;
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        .user-email {
+            color: #ff0000;
+            font-weight: bold;
+        }
+        .signout-btn {
+            padding: 0.75rem 2rem;
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .signout-btn:hover {
+            background-color: #cc0000;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255,0,0,0.3);
+        }
+        .signout-btn:active {
+            transform: translateY(0);
+        }
+        @media (max-width: 480px) {
+            .home-container {
+                padding: 2rem;
+            }
+            .welcome-text h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="home-container">
+        <div class="welcome-icon">🏠</div>
+        <div class="welcome-text">
+            <h1>Welcome to BuyNest!</h1>
+            <p>You are successfully signed in as <span class="user-email" id="userEmail"></span></p>
+            <p>Explore our latest products and enjoy a seamless shopping experience.</p>
+        </div>
+        <button class="signout-btn" onclick="handleSignOut()">Sign Out</button>
+    </div>
+
+    <script>
+        // Display user email
+        const userEmail = localStorage.getItem('userEmail');
+        if (userEmail) {
+            document.getElementById('userEmail').textContent = userEmail;
+        } else {
+            document.getElementById('userEmail').textContent = 'User';
+        }
+
+        function handleSignOut() {
+            localStorage.removeItem('isSignedIn');
+            localStorage.removeItem('userEmail');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

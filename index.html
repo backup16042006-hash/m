@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BuyNest</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: black;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ff0000;
+        }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover {
+            color: #ff0000;
+        }
+        .main-content {
+            margin-top: 4rem; /* Account for fixed header */
+            min-height: 100vh;
+            position: relative;
+        }
+        .background-image {
+            width: 100%;
+            height: 70vh;
+            object-fit: cover;
+        }
+        .image-container {
+            position: relative;
+            width: 100%;
+        }
+        .background-image {
+            width: 100%;
+            height: 70vh;
+            object-fit: cover;
+        }
+        
+        .overlay-texts {
+            position: absolute;
+            top: 20%;
+            left: 5%;
+            z-index: 10;
+            text-align: left;
+        }
+        .overlay-text-top {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(0,0,0,0.5);
+            margin-bottom: 1rem;
+            display: block;
+        }
+        .overlay-text-bottom {
+            color: white;
+            text-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+        .overlay-text-bottom h2 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+        .overlay-text-bottom p {
+            font-size: 1.4rem;
+            line-height: 1.6;
+            max-width: 500px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .start-shopping-btn {
+            position: absolute;
+            bottom: 10%;
+            left: 5%;
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transform: translateY(0);
+            z-index: 20;
+            animation: fadeInUp 0.8s ease-out forwards, pulse 2s infinite 0.8s;
+        }
+        
+        .start-shopping-btn:hover {
+            background-color: #cc0000;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        
+        .start-shopping-btn:active {
+            transform: translateY(0);
+        }
+        
+        /* Animation for elements on load */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: translateY(0) scale(1);
+            }
+            50% {
+                transform: translateY(-3px) scale(1.05);
+            }
+            100% {
+                transform: translateY(0) scale(1);
+            }
+        }
+        
+        .overlay-text-top {
+            animation-delay: 0.2s;
+        }
+        
+        .overlay-text-bottom {
+            animation-delay: 0.4s;
+        }
+        
+        
+        /* Card animations */
+        .card {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+        
+        .card:nth-child(1) { animation-delay: 0.2s; }
+        .card:nth-child(2) { animation-delay: 0.3s; }
+        .card:nth-child(3) { animation-delay: 0.4s; }
+        .card:nth-child(4) { animation-delay: 0.5s; }
+        .cards-section {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        
+        .card-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .card-content {
+            padding: 1.5rem;
+        }
+        
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        
+        .card-text {
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .background-image {
+                height: 65vh;
+            }
+            .overlay-text-bottom h2 {
+                font-size: 2.2rem;
+            }
+            .overlay-text-bottom p {
+                font-size: 1.2rem;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .background-image {
+                height: 60vh;
+            }
+            .overlay-text-bottom h2 {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            header {
+                padding: 0.8rem;
+            }
+            
+            .logo {
+                font-size: 1.2rem;
+            }
+            
+            .nav-links {
+                gap: 0.8rem;
+            }
+            
+            .nav-links a {
+                font-size: 0.85rem;
+            }
+            
+            .main-content {
+                margin-top: 3.2rem;
+            }
+            
+            .background-image {
+                height: 50vh;
+            }
+            
+            .overlay-texts {
+                top: 12%;
+                left: 3%;
+                width: 94%;
+            }
+            
+            .overlay-text-top {
+                font-size: 1rem;
+                margin-bottom: 0.5rem;
+            }
+            
+            .overlay-text-bottom h2 {
+                font-size: 1.8rem;
+            }
+            
+            .overlay-text-bottom p {
+                font-size: 1.1rem;
+            }
+            
+            .start-shopping-btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
+            }
+            
+            .cards-section {
+                padding: 1rem;
+            }
+            
+            .cards-grid {
+                gap: 1rem;
+                margin-top: 1rem;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+            
+            .card-image {
+                height: 160px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            header {
+                padding: 0.7rem;
+            }
+            
+            .logo {
+                font-size: 1rem;
+            }
+            
+            .nav-links {
+                gap: 0.6rem;
+            }
+            
+            .nav-links a {
+                font-size: 0.75rem;
+            }
+            
+            .main-content {
+                margin-top: 3rem;
+            }
+            
+            .background-image {
+                height: 45vh;
+            }
+            
+            .overlay-texts {
+                top: 10%;
+                left: 2%;
+                width: 96%;
+            }
+            
+            .overlay-text-top {
+                font-size: 0.85rem;
+                margin-bottom: 0.3rem;
+            }
+            
+            .overlay-text-bottom h2 {
+                font-size: 1.4rem;
+            }
+            
+            .overlay-text-bottom p {
+                font-size: 0.9rem;
+                max-width: 100%;
+            }
+            
+            .start-shopping-btn {
+                bottom: 8%;
+                left: 3%;
+                padding: 0.5rem 1rem;
+                font-size: 0.85rem;
+            }
+            
+            .cards-section {
+                padding: 0.8rem;
+            }
+            
+            .cards-grid {
+                grid-template-columns: 1fr;
+                gap: 0.8rem;
+            }
+            
+            .card-image {
+                height: 150px;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            .overlay-text-top {
+                font-size: 0.8rem;
+            }
+            .overlay-text-bottom h2 {
+                font-size: 1.2rem;
+            }
+            .overlay-text-bottom p {
+                font-size: 0.85rem;
+            }
+            .start-shopping-btn {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">BuyNest</div>
+        <div class="nav-links">
+            <a href="signin.html">Sign in</a>
+            <a href="signup.html">Sign up</a>
+        </div>
+    </header>
+    <div class="main-content">
+        <div class="image-container">
+            <img src="background.png" alt="Background" class="background-image">
+            <div class="overlay-texts">
+                <div class="overlay-text-top">new season 2026</div>
+                <div class="overlay-text-bottom">
+                    <h2>Welcome to BuyNest</h2>
+                    <p>Discover the latest trends and products for your home and lifestyle.</p>
+                </div>
+            </div>
+            <button class="start-shopping-btn" onclick="handleStartShopping()">Start Shopping</button>
+        </div>
+        
+        <section class="cards-section">
+            <h2 style="text-align: center; margin-bottom: 2rem; color: #333;">Featured Categories</h2>
+            <div class="cards-grid">
+                <div class="card">
+                    <img src="beauty.png" alt="Beauty" class="card-image">
+                    <div class="card-content">
+                        <h3 class="card-title">Beauty</h3>
+                        <p class="card-text">Explore our latest beauty products and cosmetics</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="ele.png" alt="Electronics" class="card-image">
+                    <div class="card-content">
+                        <h3 class="card-title">Electronics</h3>
+                        <p class="card-text">Latest gadgets and electronic devices</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="fash.png" alt="Fashion" class="card-image">
+                    <div class="card-content">
+                        <h3 class="card-title">Fashion</h3>
+                        <p class="card-text">Trendy clothing and accessories</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="living.png" alt="Living" class="card-image">
+                    <div class="card-content">
+                        <h3 class="card-title">Living</h3>
+                        <p class="card-text">Home decor and living essentials</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <script>
+        function handleStartShopping() {
+            // Check if user has an account (in a real app, this would check localStorage or make an API call)
+            // For demo purposes, we'll simulate checking if user is signed in
+            const isSignedIn = localStorage.getItem('isSignedIn') === 'true';
+            
+            if (isSignedIn) {
+                window.location.href = 'home.html';
+            } else {
+                window.location.href = 'signup.html';
+            }
+        }
+        
+        // Add fade-in classes to elements for animation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add fade-in class to overlay texts
+            const overlayTextTop = document.querySelector('.overlay-text-top');
+            const overlayTextBottom = document.querySelector('.overlay-text-bottom');
+            
+            if (overlayTextTop) overlayTextTop.classList.add('fade-in');
+            if (overlayTextBottom) overlayTextBottom.classList.add('fade-in');
+            
+            // Add fade-in class to all cards
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                card.classList.add('fade-in');
+            });
+        });
+    </script>
+</body>
+</html>

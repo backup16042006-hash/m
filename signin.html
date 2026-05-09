@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In - BuyNest</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            animation: fadeIn 0.5s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .signin-container {
+            display: flex;
+            width: 100%;
+            min-height: 100vh;
+        }
+        .image-section {
+            flex: 1;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('background.png') center/cover no-repeat;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+        .image-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        .image-section p {
+            font-size: 1.2rem;
+            max-width: 400px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+        .form-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            background: white;
+        }
+        .form-container {
+            width: 100%;
+            max-width: 400px;
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .logo h1 {
+            color: #ff0000;
+            font-size: 2.5rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: 500;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        .form-group input:focus {
+            outline: none;
+            border-color: #ff0000;
+            box-shadow: 0 0 0 3px rgba(255,0,0,0.1);
+        }
+        .signin-btn {
+            width: 100%;
+            padding: 1rem;
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+        .signin-btn:hover {
+            background-color: #cc0000;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255,0,0,0.3);
+        }
+        .signin-btn:active {
+            transform: translateY(0);
+        }
+        .signup-link {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #666;
+        }
+        .signup-link a {
+            color: #ff0000;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+        .forgot-link {
+            text-align: center;
+            margin-top: 0.8rem;
+        }
+        .forgot-link a {
+            color: #666;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        .forgot-link a:hover {
+            color: #ff0000;
+            text-decoration: underline;
+        }
+        .error-message {
+            color: #ff0000;
+            text-align: center;
+            margin-top: 1rem;
+            display: none;
+        }
+        .success-message {
+            color: #28a745;
+            text-align: center;
+            margin-top: 1rem;
+            display: none;
+        }
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .image-section h2 {
+                font-size: 2.2rem;
+            }
+            .image-section p {
+                font-size: 1.1rem;
+            }
+            .logo h1 {
+                font-size: 2.2rem;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .image-section h2 {
+                font-size: 2rem;
+            }
+            .logo h1 {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .signin-container {
+                flex-direction: column;
+            }
+            .image-section {
+                flex: 0 0 180px;
+                padding: 1.2rem;
+            }
+            .image-section h2 {
+                font-size: 1.6rem;
+            }
+            .image-section p {
+                font-size: 0.95rem;
+            }
+            .form-section {
+                flex: 1;
+                padding: 1.2rem;
+            }
+            .form-container {
+                max-width: 350px;
+            }
+            .form-group input {
+                padding: 0.65rem;
+            }
+            .signin-btn {
+                padding: 0.9rem;
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .image-section {
+                flex: 0 0 150px;
+                padding: 1rem;
+            }
+            .image-section h2 {
+                font-size: 1.4rem;
+            }
+            .image-section p {
+                font-size: 0.9rem;
+            }
+            .form-section {
+                padding: 1rem;
+            }
+            .form-container {
+                max-width: 300px;
+            }
+            .logo h1 {
+                font-size: 1.8rem;
+            }
+            .form-group input {
+                padding: 0.6rem;
+                font-size: 0.95rem;
+            }
+            .signin-btn {
+                padding: 0.8rem;
+                font-size: 0.95rem;
+            }
+            .forgot-link {
+                margin-top: 0.6rem;
+            }
+            .forgot-link a {
+                font-size: 0.85rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .form-section {
+                padding: 0.8rem;
+            }
+            .logo h1 {
+                font-size: 1.6rem;
+            }
+            .form-group {
+                margin-bottom: 1rem;
+            }
+            .signin-btn {
+                padding: 0.75rem;
+                font-size: 0.9rem;
+            }
+            .signup-link {
+                margin-top: 1.2rem;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            .image-section {
+                flex: 0 0 120px;
+            }
+            .image-section h2 {
+                font-size: 1.2rem;
+            }
+            .image-section p {
+                font-size: 0.8rem;
+            }
+            .form-container {
+                max-width: 100%;
+            }
+            .logo h1 {
+                font-size: 1.4rem;
+            }
+            .form-group input {
+                padding: 0.5rem;
+                font-size: 0.9rem;
+            }
+            .signin-btn {
+                padding: 0.7rem;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="signin-container">
+        <div class="image-section">
+            <h2>Welcome Back!</h2>
+            <p>Sign in to access your account and explore amazing products.</p>
+        </div>
+        <div class="form-section">
+            <div class="form-container">
+                <div class="logo">
+                    <h1>BuyNest</h1>
+                </div>
+                <form id="signinForm">
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" placeholder="Enter your password" required>
+                    </div>
+                    <button type="submit" class="signin-btn">Sign In</button>
+                    <p class="error-message" id="errorMessage">Please fill all fields</p>
+                    <p class="success-message" id="successMessage">Signing in...</p>
+                </form>
+                <div class="signup-link">
+                    Don't have an account? <a href="signup.html">Sign up</a>
+                </div>
+                <div class="forgot-link">
+                    <a href="forget.html">Forgot Password?</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('signinForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const errorMessage = document.getElementById('errorMessage');
+            const successMessage = document.getElementById('successMessage');
+
+            if (email && password) {
+                // Show success message briefly
+                successMessage.style.display = 'block';
+                errorMessage.style.display = 'none';
+
+                // Simulate API call delay
+                setTimeout(() => {
+                    // Store authentication state
+                    localStorage.setItem('isSignedIn', 'true');
+                    localStorage.setItem('userEmail', email);
+                    // Redirect to home page
+                    window.location.href = 'home.html';
+                }, 1000);
+            } else {
+                errorMessage.style.display = 'block';
+                successMessage.style.display = 'none';
+                setTimeout(() => {
+                    errorMessage.style.display = 'none';
+                }, 3000);
+            }
+        });
+    </script>
+</body>
+</html>

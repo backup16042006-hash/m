@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - BuyNest</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            animation: fadeIn 0.5s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .signup-container {
+            display: flex;
+            width: 100%;
+            min-height: 100vh;
+        }
+        .image-section {
+            flex: 1;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('background.png') center/cover no-repeat;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+        .image-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        .image-section p {
+            font-size: 1.2rem;
+            max-width: 400px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+        .form-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            background: white;
+        }
+        .form-container {
+            width: 100%;
+            max-width: 450px;
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        .logo h1 {
+            color: #ff0000;
+            font-size: 2.5rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.4rem;
+            color: #333;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.7rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #ff0000;
+            box-shadow: 0 0 0 3px rgba(255,0,0,0.1);
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        .signup-btn {
+            width: 100%;
+            padding: 1rem;
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+        .signup-btn:hover {
+            background-color: #cc0000;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255,0,0,0.3);
+        }
+        .signup-btn:active {
+            transform: translateY(0);
+        }
+        .signin-link {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #666;
+        }
+        .signin-link a {
+            color: #ff0000;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .signin-link a:hover {
+            text-decoration: underline;
+        }
+        .error-message {
+            color: #ff0000;
+            text-align: center;
+            margin-top: 1rem;
+            display: none;
+            font-size: 0.9rem;
+        }
+        .success-message {
+            color: #28a745;
+            text-align: center;
+            margin-top: 1rem;
+            display: none;
+        }
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .image-section h2 {
+                font-size: 2.2rem;
+            }
+            .image-section p {
+                font-size: 1.1rem;
+            }
+            .logo h1 {
+                font-size: 2.2rem;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .image-section h2 {
+                font-size: 2rem;
+            }
+            .logo h1 {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .signup-container {
+                flex-direction: column;
+            }
+            .image-section {
+                flex: 0 0 180px;
+                padding: 1.2rem;
+            }
+            .image-section h2 {
+                font-size: 1.6rem;
+            }
+            .image-section p {
+                font-size: 0.95rem;
+            }
+            .form-section {
+                flex: 1;
+                padding: 1.2rem;
+            }
+            .form-container {
+                max-width: 380px;
+            }
+            .form-group input,
+            .form-group textarea {
+                padding: 0.65rem;
+                font-size: 0.95rem;
+            }
+            .signup-btn {
+                padding: 0.9rem;
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .image-section {
+                flex: 0 0 150px;
+                padding: 1rem;
+            }
+            .image-section h2 {
+                font-size: 1.4rem;
+            }
+            .image-section p {
+                font-size: 0.9rem;
+            }
+            .form-section {
+                padding: 1rem;
+            }
+            .form-container {
+                max-width: 320px;
+            }
+            .logo h1 {
+                font-size: 1.8rem;
+            }
+            .form-group input,
+            .form-group textarea {
+                padding: 0.6rem;
+                font-size: 0.9rem;
+            }
+            .form-group textarea {
+                min-height: 70px;
+            }
+            .signup-btn {
+                padding: 0.8rem;
+                font-size: 0.95rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .form-section {
+                padding: 0.8rem;
+            }
+            .logo h1 {
+                font-size: 1.6rem;
+            }
+            .form-group {
+                margin-bottom: 1rem;
+            }
+            .signup-btn {
+                padding: 0.75rem;
+                font-size: 0.9rem;
+            }
+            .signin-link {
+                margin-top: 1.2rem;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            .image-section {
+                flex: 0 0 120px;
+            }
+            .image-section h2 {
+                font-size: 1.2rem;
+            }
+            .image-section p {
+                font-size: 0.8rem;
+            }
+            .form-container {
+                max-width: 100%;
+            }
+            .logo h1 {
+                font-size: 1.4rem;
+            }
+            .form-group input,
+            .form-group textarea {
+                padding: 0.5rem;
+                font-size: 0.85rem;
+            }
+            .form-group textarea {
+                min-height: 60px;
+            }
+            .signup-btn {
+                padding: 0.7rem;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="signup-container">
+        <div class="image-section">
+            <h2>Join BuyNest</h2>
+            <p>Create your account and start shopping amazing products today.</p>
+        </div>
+        <div class="form-section">
+            <div class="form-container">
+                <div class="logo">
+                    <h1>BuyNest</h1>
+                </div>
+                <form id="signupForm">
+                    <div class="form-group">
+                        <label for="fullname">Full Name</label>
+                        <input type="text" id="fullname" placeholder="Enter your full name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" placeholder="Create a password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input type="password" id="confirmPassword" placeholder="Confirm your password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Full Address</label>
+                        <textarea id="address" placeholder="Enter your complete address" required></textarea>
+                    </div>
+                    <button type="submit" class="signup-btn">Create Account</button>
+                    <p class="error-message" id="errorMessage"></p>
+                    <p class="success-message" id="successMessage">Creating your account...</p>
+                </form>
+                <div class="signin-link">
+                    Already have an account? <a href="signin.html">Sign in</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const fullname = document.getElementById('fullname').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const address = document.getElementById('address').value.trim();
+            const errorMessage = document.getElementById('errorMessage');
+            const successMessage = document.getElementById('successMessage');
+
+            // Validation
+            if (!fullname || !email || !password || !confirmPassword || !address) {
+                errorMessage.textContent = 'Please fill all fields';
+                errorMessage.style.display = 'block';
+                successMessage.style.display = 'none';
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                errorMessage.textContent = 'Passwords do not match';
+                errorMessage.style.display = 'block';
+                successMessage.style.display = 'none';
+                return;
+            }
+
+            if (password.length < 6) {
+                errorMessage.textContent = 'Password must be at least 6 characters';
+                errorMessage.style.display = 'block';
+                successMessage.style.display = 'none';
+                return;
+            }
+
+            // Store user data (in a real app, this would be sent to a server)
+            const userData = {
+                fullname,
+                email,
+                password, // In real app, never store plain passwords
+                address,
+                verified: false,
+                verificationCode: null,
+                codeExpiry: null
+            };
+
+            localStorage.setItem('pendingUser', JSON.stringify(userData));
+            errorMessage.style.display = 'none';
+            successMessage.style.display = 'block';
+
+            // Generate verification code and send to verify page
+            setTimeout(() => {
+                window.location.href = 'verify.html';
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
